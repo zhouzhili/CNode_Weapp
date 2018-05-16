@@ -16,7 +16,7 @@
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    font-size: 32 rpx;
+    font-size: 32rpx;
     color: #333;
   }
 
@@ -30,5 +30,8 @@
   .main-content {
     flex: 1;
     display: flex;
+  }
+  view{
+    word-break: break-all;
   }
 </style>

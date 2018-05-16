@@ -1,12 +1,16 @@
 <template>
-  <div class="listItem" :id="item.id">
+  <div class="listItem"  @click="showDetailPage(item.id)">
     <div class="item-header">
-      <span class="item-tag">{{displayTag}}</span>
-      <div>
-        <span class="reply-count">{{item.reply_count}}</span>/
-        <span>{{item.visit_count}}</span> •
-        <span>{{lastReply}}</span>
+      <div class="item-author-wrap">
+        <div class="item-author">
+          <img :src="item.author.avatar_url"/>
+        </div>
+        <div class="author-info">
+          <span class="author-name">{{item.author.loginname}}</span>
+          <span class="create-time">{{createAt}}</span>
+        </div>
       </div>
+      <span class="item-tag" :style="{'background-color':tagBgColor}">{{displayTag}}</span>
     </div>
 
     <div>
@@ -15,13 +19,17 @@
     </div>
 
     <div class="item-footer">
-      <div class="item-author">
-        <img :src="item.author.avatar_url"/>
-        <span>{{item.author.loginname}}</span>
-      </div>
       <div>
-        <span>创建于: </span>
-        <span>{{createAt}}</span>
+        <img src="../../static/images/comment.png"/>
+        <span class="reply-count">{{item.reply_count}}</span>
+      </div>
+       <div>
+         <img src="../../static/images/visited.png"/>
+         <span>{{item.visit_count}}</span>
+       </div>
+      <div>
+        <img src="../../static/images/time.png"/>
+        <span>{{lastReply}}</span>
       </div>
     </div>
   </div>
@@ -53,6 +61,11 @@
         }
       }
     },
+    data(){
+      return{
+        tagBgColor:'#ddd'
+      }
+    },
     computed: {
       lastReply() {
         let time = moment().diff(moment(this.item.last_reply_at)) / 1000;
@@ -74,12 +87,15 @@
       displayTag() {
         let tag = '';
         if (this.item.top) {
-          tag = '置顶'
+          tag = '置顶';
+          this.tagBgColor='red'
         } else if (this.item.good) {
-          tag = '精华'
+          tag = '精华';
+          this.tagBgColor='red';
         } else {
           let tagObj = {'ask': '问答', 'share': '分享', 'good': '精华', 'job': '招聘'};
-          let tag = tagObj[this.item.tab];
+          tag = tagObj[this.item.tab];
+          this.tagBgColor='#ddd';
         }
         return tag;
       },
@@ -87,38 +103,58 @@
         return moment(this.item.create_at).format("YYYY-MM-DD HH:mm:ss");
       }
     },
-    methods() {
-
+    methods: {
+      showDetailPage(id){
+        console.log(id);
+      }
     }
   }
 </script>
 
 <style scoped>
   .listItem {
-    margin: 12 rpx 8 rpx;
-    padding: 20 rpx;
+    padding: 8rpx;
     background-color: #fff;
-    border-radius: 4 rpx;
+    border-radius: 4rpx;
   }
 
   img {
-    width: 64 rpx;
-    height: 48 rpx;
+    width: 64rpx;
+    height: 48rpx;
   }
 
   .item-header {
     display: flex;
-    padding: 8 rpx 0;
+    padding: 8rpx 0;
     align-items: center;
     justify-content: space-between;
-    font-size: 28 rpx;
+    font-size: 28rpx;
   }
 
+  .item-author-wrap{
+    display: flex;
+  }
+
+  .author-info{
+    display: flex;
+    flex-direction: column;
+    margin-left: 6rpx;
+  }
+  .author-info>.author-name{
+    font-size: 28rpx;
+    color: #3366CC;
+  }
+  .author-info>.create-time{
+    font-size: 20rpx;
+    color:#999999;
+  }
   .item-tag {
-    background-color: #80bd01;
+    background-color: #ddd;
     color: #fff;
-    padding: 8 rpx;
-    border-radius: 8 rpx;
+    padding: 6rpx;
+    border-radius: 8rpx;
+    font-size: 24rpx;
+
   }
 
   .reply-count {
@@ -127,28 +163,41 @@
 
   .item-title {
     font-weight: 800;
+    margin-bottom: 8rpx;
   }
 
   .item-content {
-    color: #898989;
+    color: #696969;
+    font-size: 32rpx;
+    letter-spacing: 1.6rpx;
   }
 
   .item-footer {
-    margin-top: 16 rpx;
+    margin-top: 16rpx;
     border-top: 1px solid #ddd;
-    padding: 20 rpx 0;
+    padding: 16rpx 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    font-size: 28 rpx;
+    font-size: 22rpx;
   }
-
+  .item-footer>div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 20rpx;
+    color:#999999
+  }
+  .item-footer>div>img{
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 6rpx;
+  }
   .item-author {
     display: flex;
     align-items: center;
   }
 
   .item-author > img {
-    margin-right: 6 rpx;
+    margin-right: 6rpx;
   }
 </style>

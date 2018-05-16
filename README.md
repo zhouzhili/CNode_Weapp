@@ -1,4 +1,4 @@
-# d4_mpvue
+# 基于mpvue的CNode小程序
 
 > A Mpvue project
 
@@ -19,3 +19,14 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+#### 踩坑记录 
+
+---
+
+1.mpvue不支持在组件引用时，定义在组件上的v-show（可用v-if记录）
+
+2.请求数据时使用axios库会报错，建议使用flyio库代替
+
+
+

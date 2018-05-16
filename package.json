@@ -10,7 +10,7 @@
     "build": "rimraf dist && node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "flyio": "^0.5.7",
     "moment": "^2.22.1",
     "mpvue": "^1.0.10",
     "vuex": "^2.3.1"
