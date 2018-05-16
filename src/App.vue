@@ -34,4 +34,7 @@
   view{
     word-break: break-all;
   }
+  image{
+    max-width: 90%;
+  }
 </style>

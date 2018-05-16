@@ -13,6 +13,7 @@
     "flyio": "^0.5.7",
     "moment": "^2.22.1",
     "mpvue": "^1.0.10",
+    "mpvue-wxparse": "^0.6.1",
     "vuex": "^2.3.1"
   },
   "devDependencies": {

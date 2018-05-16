@@ -50,9 +50,12 @@ function getTopic(params) {
   return xhr('/topics','get',params);
 }
 
-
+function getTopicDetail(id) {
+  return xhr(`/topic/${id}`,'get')
+}
 export default {
-  getTopic
+  getTopic,
+  getTopicDetail
 }
 
 

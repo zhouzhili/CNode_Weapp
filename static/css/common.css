@@ -1,0 +1,61 @@
+
+/*头部，作者头像,名称，时间，标签*/
+.item-header {
+  display: flex;
+  padding: 8rpx 0;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28rpx;
+}
+
+.item-author-wrap{
+  display: flex;
+}
+
+.item-author {
+  display: flex;
+  align-items: center;
+}
+
+.item-author > img {
+  margin-right: 6rpx;
+  border-radius: 20rpx;
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.author-info{
+  display: flex;
+  flex-direction: column;
+  margin-left: 6rpx;
+}
+.author-info>.author-name{
+  font-size: 28rpx;
+  color: #3366CC;
+}
+.author-info>.create-time{
+  font-size: 20rpx;
+  color:#999999;
+}
+.item-tag {
+  background-color: #ddd;
+  color: #fff;
+  padding: 6rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+
+}
+
+/*标题*/
+.item-title {
+  font-weight: 800;
+  margin-bottom: 8rpx;
+}
+
+/*内容*/
+.item-content {
+  letter-spacing: 1.6rpx;
+  line-height:1.5em;
+  margin:1em 0;
+}
+

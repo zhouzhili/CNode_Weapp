@@ -37,7 +37,8 @@
 
 <script>
   import moment from 'moment'
-
+  import util from '../utils'
+  import '../../static/css/common.css'
   export default {
     props: {
       item: {
@@ -68,18 +69,7 @@
     },
     computed: {
       lastReply() {
-        let time = moment().diff(moment(this.item.last_reply_at)) / 1000;
-        let result = '';
-        if (time < 60) {
-          result = `${Math.round(time)}秒前`;
-        } else if (time < 60 * 60) {
-          result = `${Math.round(time / 60)}分钟前`;
-        } else if (time < 60 * 60 * 24) {
-          result = `${Math.round(time / 60 / 60)}小时前`;
-        } else {
-          result = `${Math.round(time / 60 / 60 / 24)}天前`;
-        }
-        return result;
+        return util.getTime2Now(this.item.last_reply_at)
       },
       displayContent() {
         return this.item.content.slice(0, 150) + '...';
@@ -105,7 +95,9 @@
     },
     methods: {
       showDetailPage(id){
-        console.log(id);
+        wx.navigateTo({
+          url:'../topicDetail/main?id='+id
+        });
       }
     }
   }
@@ -118,60 +110,19 @@
     border-radius: 4rpx;
   }
 
-  img {
-    width: 64rpx;
-    height: 48rpx;
-  }
-
-  .item-header {
-    display: flex;
-    padding: 8rpx 0;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 28rpx;
-  }
-
-  .item-author-wrap{
-    display: flex;
-  }
-
-  .author-info{
-    display: flex;
-    flex-direction: column;
-    margin-left: 6rpx;
-  }
-  .author-info>.author-name{
-    font-size: 28rpx;
-    color: #3366CC;
-  }
-  .author-info>.create-time{
-    font-size: 20rpx;
-    color:#999999;
-  }
-  .item-tag {
-    background-color: #ddd;
-    color: #fff;
-    padding: 6rpx;
-    border-radius: 8rpx;
-    font-size: 24rpx;
-
-  }
-
+  /*回复数*/
   .reply-count {
     color: #80bd01;
   }
 
-  .item-title {
-    font-weight: 800;
-    margin-bottom: 8rpx;
-  }
-
+  /*简介内容*/
   .item-content {
     color: #696969;
     font-size: 32rpx;
     letter-spacing: 1.6rpx;
   }
 
+  /*底部*/
   .item-footer {
     margin-top: 16rpx;
     border-top: 1px solid #ddd;
@@ -187,17 +138,10 @@
     margin: 0 20rpx;
     color:#999999
   }
+
   .item-footer>div>img{
     width: 28rpx;
     height: 28rpx;
-    margin-right: 6rpx;
-  }
-  .item-author {
-    display: flex;
-    align-items: center;
-  }
-
-  .item-author > img {
     margin-right: 6rpx;
   }
 </style>

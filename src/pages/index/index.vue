@@ -16,6 +16,10 @@
         </div>
       </div>
     </div>
+
+    <div>
+
+    </div>
   </div>
 </template>
 
@@ -51,13 +55,32 @@
       },
 
       getTopic(tab = '') {
+        let self=this;
         this.showLoading=true;
         api.getTopic({page: 1, limit: 10, tab, mdrender: 'false'}).then(resp => {
           this.showLoading=false;
-          this.topicData = resp.content;
-        }).catch(err => {
-          this.showLoading=false;
-          console.log(err);
+          if(resp.success){
+            this.topicData = resp.content;
+            //缓存数据
+            wx.setStorage({
+              key:'cnodeTopicList'+this.activeTab,
+              data:JSON.stringify(resp.content)
+            });
+          }else {
+            wx.showToast({title:'获取网络数据失败，将从缓存读取数据'});
+            wx.getStorageInfo({
+              success: function(res) {
+                let curKey='cnodeTopicList'+self.activeTab;
+                if(curKey in res.keys){
+                  try{
+                    self.topicData=JSON.parse(res[curKey]);
+                  }catch(err) {
+                    wx.showToast({title:'获取缓存数据失败'})
+                  }
+                }
+              }
+            })
+          }
         })
       }
     },
