@@ -23,11 +23,19 @@ function xhr(url,method,params) {
     fly[method](url,params)
       .then(resp=>{
         if(resp.success){
-          resolve({
-            success:true,
-            message:'获取数据成功',
-            content:resp.data
-          });
+          if(method==='get'){
+            resolve({
+              success:true,
+              message:'获取数据成功',
+              content:resp.data
+            });
+          }else if(method==='post'){
+            resolve({
+              success:true,
+              message:'获取数据成功',
+              content:resp
+            });
+          }
         }else {
           resolve({
             success:false,
@@ -50,12 +58,34 @@ function getTopic(params) {
   return xhr('/topics','get',params);
 }
 
+//获取主题详细内容
 function getTopicDetail(id) {
   return xhr(`/topic/${id}`,'get')
 }
+
+async function login(token) {
+  let resp={
+    success:false,
+    content:{},
+    message:''
+  };
+  try{
+    let tokenInfo=await xhr('/accesstoken','post',{accesstoken:token});
+    if(tokenInfo.success){
+      return await xhr(`/user/${tokenInfo.content.loginname}`,'get');
+    }else {
+      return resp;
+    }
+  }catch (err){
+    resp.message=err;
+    return resp
+  }
+}
+
 export default {
   getTopic,
-  getTopicDetail
+  getTopicDetail,
+  login
 }
 
 

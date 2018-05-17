@@ -24,9 +24,13 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 ---
 
-1.mpvue不支持在组件引用时，定义在组件上的v-show（可用v-if记录）
+1. mpvue不支持在组件引用时，定义在组件上的v-show（可用v-if记录）
 
-2.请求数据时使用axios库会报错，建议使用flyio库代替
+
+2. 请求数据时使用axios库会报错，建议使用flyio库代替
+
+
+3. 生命周期要弄清楚，vue的mounted函数是在页面显示之后(onShow)之后执行的，因此数据的更新加载需要在显示之前处理，及在onShow中处理
 
 
 

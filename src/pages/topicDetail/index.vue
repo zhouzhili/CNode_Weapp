@@ -46,7 +46,8 @@
       return{
         tagBgColor:'#ddd',
         detailData:{},
-        showLoading:true
+        showLoading:true,
+        currentId:''
       }
     },
     computed: {
@@ -70,16 +71,20 @@
       }
     },
 
-    mounted() {
+    //小程序的生命周期函数,onShow比mounted早执行
+    onShow(){
       let id=this.$root.$mp.query.id;
-      this.showLoading=true;
-      this.detailData={};
-      api.getTopicDetail(id).then(resp=>{
-        this.showLoading=false;
-        if(resp.success){
-          this.detailData=resp.content;
-        }
-      });
+      if(this.currentId!==id){
+        this.showLoading=true;
+        this.detailData={};
+        api.getTopicDetail(id).then(resp=>{
+          this.showLoading=false;
+          if(resp.success){
+            this.detailData=resp.content;
+          }
+        });
+        this.currentId=id;
+      }
     },
 
     components:{

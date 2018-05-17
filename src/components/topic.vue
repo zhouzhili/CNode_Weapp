@@ -72,7 +72,7 @@
         return util.getTime2Now(this.item.last_reply_at)
       },
       displayContent() {
-        return this.item.content.slice(0, 150) + '...';
+        return this.item.content.slice(0, 50) + '...';
       },
       displayTag() {
         let tag = '';
