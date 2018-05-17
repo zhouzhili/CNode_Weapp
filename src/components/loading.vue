@@ -1,3 +1,4 @@
+<!--加载动画-->
 <template>
   <div class="loading">
     <img src="../../static/images/loading.gif"/>

@@ -63,6 +63,7 @@ function getTopicDetail(id) {
   return xhr(`/topic/${id}`,'get')
 }
 
+//用户登录
 async function login(token) {
   let resp={
     success:false,
@@ -82,10 +83,22 @@ async function login(token) {
   }
 }
 
+//获取用户详细情况
+function getUserDetail(userName){
+  return xhr(`/user/${userName}`,'get');
+}
+
+//获取用户收藏
+function getUserCollect(userName){
+  return xhr(`/topic_collect/${userName}`,'get');
+}
+
 export default {
   getTopic,
   getTopicDetail,
-  login
+  login,
+  getUserDetail,
+  getUserCollect
 }
 
 

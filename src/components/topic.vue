@@ -1,3 +1,4 @@
+<!--首页中主题项-->
 <template>
   <div class="listItem"  @click="showDetailPage(item.id)">
     <div class="item-header">
