@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="blue-bg"></div>
 
     <div  v-show="!login">
@@ -63,10 +63,10 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
+
   import api from '../../utils/comAPI'
   import userCollection from '@/components/userCollection'
   export default {
@@ -115,7 +115,10 @@
           success: (res) => {
             let accessToken = res.result;
             //存储token
-            wx.setStorage({key:'accessToken',data:accessToken});
+            self.$store.dispatch({
+              type:'setTokenAsync',
+              token:accessToken
+            });
             //登录
             self.loginByToken(accessToken);
           },
@@ -139,8 +142,14 @@
         this.recentTopic=[];
         this.recentReplies=[];
         this.collections=[];
-        wx.removeStorage({key:'userInfo'});
-        wx.removeStorage({key:'accessToken'});
+        this.$store.dispatch({
+          type:'setTokenAsync',
+          token:''
+        });
+        this.$store.dispatch({
+          type:'setUserInfoAsync',
+          userInfo:''
+        });
 
       },
 
@@ -151,7 +160,9 @@
 
       //通过token登录
       loginByToken(token){
+        wx.showLoading({title:'正在获取用户信息'});
         api.login(token).then(resp=>{
+          wx.hideLoading();
           if(resp.success){
             this.user=resp.content;
             this.login=true;
@@ -159,7 +170,10 @@
             this.getUserTopic();
             this.getUserCollect();
             //存储用户
-            wx.setStorage({key:'userInfo',data:resp.content});
+            this.$store.dispatch({
+              type:'setUserInfoAsync',
+              userInfo:resp.content
+            });
           }else {
             wx.showToast({title: 'token无效', icon: 'none'});
           }
@@ -168,12 +182,12 @@
 
       //从缓存获取用户数据
       getUserInfoFromCache(){
-        let userInfo=wx.getStorageSync('userInfo');
+        let userInfo=this.$store.state.userInfo;
         if(userInfo){
           this.user=userInfo;
           this.login=true;
         }else {
-          let token=wx.getStorageSync('accessToken');
+          let token=this.$store.state.token;
           if(token){
             this.loginByToken(token);
           }
@@ -197,6 +211,9 @@
         api.getUserCollect(this.user.loginname).then(resp=>{
           if(resp.success){
             this.collections=resp.content;
+            for(let i=0;i<3;i++){
+              this.collections=this.collections.concat(resp.content);
+            }
           }else {
             wx.showToast({title: '获取收藏失败', icon: 'none'});
           }

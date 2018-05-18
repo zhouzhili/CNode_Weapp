@@ -5,7 +5,7 @@
     <div class="topic-info">
       <div>
         <span>你{{doAction}}了帖子：</span>
-        <span class="title">{{getShortTitle}}</span>
+        <span class="title" @click="handleClick(data.id)">{{getShortTitle}}</span>
       </div>
       <span class="time">
         {{time2Now}}
@@ -27,6 +27,13 @@
       },
       getShortTitle(){
         return this.data.title.length>50?this.data.title.slice(0,50)+'...':this.data.title;
+      }
+    },
+    methods:{
+      handleClick(id){
+        wx.navigateTo({
+          url:'../topicDetail/main?id='+id
+        });
       }
     }
   }

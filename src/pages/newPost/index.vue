@@ -2,7 +2,7 @@
   <div class="container">
     <div class="text">标题:</div>
     <div class="input-wrap">
-      <input placeholder="请输入标题" v-model="title"/>
+      <input placeholder="请输入标题,10个字以上" v-model="title"/>
     </div>
     <div class="text">内容:</div>
     <div class="input-wrap">
@@ -14,20 +14,29 @@
         <div>{{range[rangeIndex]}}</div>
       </picker>
     </div>
-    <button class="primary" @click="postNewTopic">发帖</button>
+    <button class="primary" @click="postNewTopic" :disabled="token==''">发帖</button>
+    <span class="text" v-show="token==''">登录后才能发帖,请先前往用户界面登录</span>
   </div>
 
 </template>
 
 <script>
+  import api from '../../utils/comAPI'
   export default {
     data(){
       return{
         title:'',
         content:'',
-        range:['问答','分享','招聘'],
-        rangeIndex:0
+        range:['问答','分享','招聘','测试'],
+        tab:['ask','share','job','dev'],
+        rangeIndex:0,
+        disable:true,
+        token:''
       }
+    },
+
+    onShow(){
+      this.token=this.$store.state.token;
     },
     methods:{
       pickerChange(e){
@@ -35,7 +44,30 @@
       },
       //发帖
       postNewTopic(){
+        if(!this.title.trim()){
+          wx.showToast({title:'标题不能为空',icon:'none'});
+          return;
+        }
+        if(!this.content.trim()){
+          wx.showToast({title:'内容不能为空',icon:'none'});
+          return
+        }
 
+        api.postNewTopics({
+          accesstoken:this.token,
+          title:this.title,
+          tab:this.tab[this.rangeIndex],
+          content:this.content
+        }).then(resp=>{
+          console.log(resp);
+          if(resp.success){
+            wx.showToast({title:'发布成功!'});
+            this.title='';
+            this.content='';
+          }else {
+            wx.showToast({title:`发布失败\n${resp.message}`,icon:'none'});
+          }
+        })
       }
     }
   }
@@ -95,7 +127,7 @@
   .primary{
     color:#FFFFFF;
     background-color:#1AAD19;
-    width:98%;
+    width:96%;
     margin-top: 30rpx;
   }
 </style>

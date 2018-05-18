@@ -39,7 +39,7 @@ function xhr(url,method,params) {
         }else {
           resolve({
             success:false,
-            message:'获取数据失败',
+            message:resp.error_msg||'获取数据失败',
             content:[]
           });
         }
@@ -93,12 +93,17 @@ function getUserCollect(userName){
   return xhr(`/topic_collect/${userName}`,'get');
 }
 
+//发表新帖
+function postNewTopics(params) {
+  return xhr('/topics','post',params);
+}
 export default {
   getTopic,
   getTopicDetail,
   login,
   getUserDetail,
-  getUserCollect
+  getUserCollect,
+  postNewTopics
 }
 
 
