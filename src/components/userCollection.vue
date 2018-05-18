@@ -16,6 +16,7 @@
 
 <script>
   import util from '../utils'
+  import '../../static/css/message.css'
   export default {
     props:['data','tab'],
     computed:{
@@ -40,30 +41,4 @@
 </script>
 
 <style scoped>
-  .user-item-wrap{
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #eee;
-    margin: 8rpx;
-    padding: 8rpx 0;
-    min-height: 120rpx;
-  }
-  img{
-    width:86rpx;
-    height:86rpx;
-    border-radius: 120rpx;
-    margin-right: 6rpx;
-  }
-  .topic-info{
-    display: flex;
-    flex-direction: column;
-    font-size: 24rpx;
-  }
-  .title{
-    color:#3366CC;
-  }
-  .time{
-    color:#696969;
-    font-size: 20rpx;
-  }
 </style>

@@ -37,4 +37,7 @@
   image{
     max-width: 90%;
   }
+  .a{
+    color:#3366CC;
+  }
 </style>

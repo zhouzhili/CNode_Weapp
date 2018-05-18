@@ -4,14 +4,14 @@
 
     <div  v-show="!login">
       <div class="user-info">
-        <img src="../../../static/images/loginDefault.png" @click="handleLogin"/>
+        <img src="/static/images/loginDefault.png" @click="handleLogin"/>
         <div>
           <span>请点击头像登录</span>
         </div>
       </div>
       <div class="column-flex tips-wrap">
         <div class="tips">
-          <img src="../../../static/images/cnodejs.svg"/>
+          <img src="/static/images/cnodejs.svg"/>
           <div class="tips-msg">
             <span>该程序将从CNode获取以下信息:</span>
             <span>获取您的公开信息(昵称,头像等)</span>
@@ -92,6 +92,9 @@
 
     //先检查缓存是否已经登录
     onShow(){
+      wx.setNavigationBarTitle({
+        title:'个人主页'
+      });
       try{
         this.getUserInfoFromCache();
       }catch(err) {
@@ -296,7 +299,7 @@
 
   .blue-bg {
     background-color: #0099CC;
-    height: 400rpx;
+    height: 100px;
     width: 100%;
   }
 

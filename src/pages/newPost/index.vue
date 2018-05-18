@@ -10,7 +10,7 @@
     </div>
     <div class="picker-wrap">
       <span>主题</span>
-      <picker  :range="range" @change="pickerChange">
+      <picker :range="range" @change="pickerChange">
         <div>{{range[rangeIndex]}}</div>
       </picker>
     </div>
@@ -22,50 +22,55 @@
 
 <script>
   import api from '../../utils/comAPI'
+
   export default {
-    data(){
-      return{
-        title:'',
-        content:'',
-        range:['问答','分享','招聘','测试'],
-        tab:['ask','share','job','dev'],
-        rangeIndex:0,
-        disable:true,
-        token:''
+    data() {
+      return {
+        title: '',
+        content: '',
+        range: ['问答', '分享', '招聘', '测试'],
+        tab: ['ask', 'share', 'job', 'dev'],
+        rangeIndex: 0,
+        disable: true,
+        token: ''
       }
     },
 
-    onShow(){
-      this.token=this.$store.state.token;
+    onShow() {
+      this.token = this.$store.state.token;
+      wx.setNavigationBarTitle({
+        title:'发布主题'
+      })
     },
-    methods:{
-      pickerChange(e){
+
+    methods: {
+      pickerChange(e) {
         this.rangeIndex = e.mp.detail.value;
       },
       //发帖
-      postNewTopic(){
-        if(!this.title.trim()){
-          wx.showToast({title:'标题不能为空',icon:'none'});
+      postNewTopic() {
+        if (!this.title.trim() || this.title.length < 10) {
+          wx.showToast({title: '标题不能为空或少于10个字', icon: 'none'});
           return;
         }
-        if(!this.content.trim()){
-          wx.showToast({title:'内容不能为空',icon:'none'});
+        if (!this.content.trim()) {
+          wx.showToast({title: '内容不能为空', icon: 'none'});
           return
         }
 
         api.postNewTopics({
-          accesstoken:this.token,
-          title:this.title,
-          tab:this.tab[this.rangeIndex],
-          content:this.content
-        }).then(resp=>{
-          console.log(resp);
-          if(resp.success){
-            wx.showToast({title:'发布成功!'});
-            this.title='';
-            this.content='';
-          }else {
-            wx.showToast({title:`发布失败\n${resp.message}`,icon:'none'});
+          accesstoken: this.token,
+          title: this.title,
+          tab: this.tab[this.rangeIndex],
+          content: this.content
+        }).then(resp => {
+          if (resp.success) {
+            wx.showToast({title: '发布成功!'});
+            this.title = '';
+            this.content = '';
+          } else {
+            console.log(resp);
+            wx.showToast({title: `发布失败:${resp.message.error_msg}`, icon: 'none'});
           }
         })
       }
@@ -74,60 +79,68 @@
 </script>
 
 <style scoped>
-  .container{
-    background-color:#F8F8F8;
-    font-size:30rpx;
-    color:#696969;
+  .container {
+    background-color: #F8F8F8;
+    font-size: 30rpx;
+    color: #696969;
   }
-  .text{
-    margin-top:.77em;
-    margin-bottom:.3em;
-    padding-left:15px;
-    padding-right:15px;
-    color:#999;
-    font-size:14px;
+
+  .text {
+    margin-top: .77em;
+    margin-bottom: .3em;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #999;
+    font-size: 14px;
   }
-  .input-wrap{
+
+  .input-wrap {
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
   }
-  input{
-    height:2.58823529em;
-    min-height:2.58823529em;
-    line-height:2.58823529em;
+
+  input {
+    height: 2.58823529em;
+    min-height: 2.58823529em;
+    line-height: 2.58823529em;
     background-color: #fff;
     padding: 10rpx;
   }
-  textarea{
+
+  textarea {
     height: 300rpx;
     width: 100%;
     background-color: #fff;
     padding: 10rpx;
   }
-  .picker-wrap{
+
+  .picker-wrap {
     display: flex;
     align-items: center;
     background-color: #fff;
     margin-top: 20rpx;
   }
-  .picker-wrap>span{
+
+  .picker-wrap > span {
     padding: 0 20rpx;
-    color:#999;
-    font-size:14px;
+    color: #999;
+    font-size: 14px;
   }
-  picker{
-    height:2.58823529em;
-    min-height:2.58823529em;
-    line-height:2.58823529em;
+
+  picker {
+    height: 2.58823529em;
+    min-height: 2.58823529em;
+    line-height: 2.58823529em;
     background-color: #fff;
-    border-left:1px solid #eee;
+    border-left: 1px solid #eee;
     padding: 10rpx;
     flex: 1;
   }
-  .primary{
-    color:#FFFFFF;
-    background-color:#1AAD19;
-    width:96%;
+
+  .primary {
+    color: #FFFFFF;
+    background-color: #1AAD19;
+    width: 96%;
     margin-top: 30rpx;
   }
 </style>

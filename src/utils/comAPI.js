@@ -39,7 +39,7 @@ function xhr(url,method,params) {
         }else {
           resolve({
             success:false,
-            message:resp.error_msg||'获取数据失败',
+            message:resp.response.data||'获取数据失败',
             content:[]
           });
         }
@@ -97,13 +97,26 @@ function getUserCollect(userName){
 function postNewTopics(params) {
   return xhr('/topics','post',params);
 }
+
+//全部已读
+function markAll(token) {
+  return xhr('/message/mark_all','post',{accesstoken:token});
+}
+
+
+//获取已读和未读消息
+function getMsg(token) {
+  return xhr('/messages','get',{accesstoken:token});
+}
 export default {
   getTopic,
   getTopicDetail,
   login,
   getUserDetail,
   getUserCollect,
-  postNewTopics
+  postNewTopics,
+  markAll,
+  getMsg
 }
 
 

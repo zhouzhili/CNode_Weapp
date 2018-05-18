@@ -20,7 +20,7 @@ npm run build --report
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-#### 踩坑记录 
+#### 踩坑记录
 
 ---
 
@@ -32,5 +32,12 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 3. 生命周期要弄清楚，vue的mounted函数是在页面显示之后(onShow)之后执行的，因此数据的更新加载需要在显示之前处理，及在onShow中处理
 
+4. mpvue中store无法在new Vue的时候传入store，因此可以再main.js中导入store，并绑定到
+  vue的构造函数原型上，这样每个.vue组件都可以通过this.$store访问到store对象。
 
+```
+   import store from './stores'
+   Vue.prototype.$store=store
+```
 
+5. mpvue中样式单位可以用px的，推荐使用rem,编译工具会编译成rpx。

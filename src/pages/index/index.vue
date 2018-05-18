@@ -45,6 +45,9 @@
     },
 
     mounted() {
+      wx.setNavigationBarTitle({
+        title:'首页'
+      });
       this.getTopic();
     },
 
@@ -112,8 +115,7 @@
   }
 
   .activeTab {
-    background-color: #2aabd2;
-    color: #fff;
+    color: #0099CC;
   }
 
   .list-wrap {

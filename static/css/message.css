@@ -1,0 +1,37 @@
+/*message和collections公共css*/
+.user-item-wrap{
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  margin: 8rpx;
+  padding: 8rpx 0;
+  min-height: 120rpx;
+}
+img{
+  width:86rpx;
+  height:86rpx;
+  border-radius: 120rpx;
+  margin-right: 10rpx;
+}
+.author{
+  font-weight: 800;
+}
+.topic-info{
+  display: flex;
+  flex-direction: column;
+  font-size: 24rpx;
+}
+.title{
+  color:#3366CC;
+}
+.time{
+  color:#696969;
+  font-size: 20rpx;
+}
+.item-tag {
+  background-color: #ddd;
+  color: #fff;
+  padding: 6rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
