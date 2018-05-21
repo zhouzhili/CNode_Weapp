@@ -41,6 +41,8 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 ```
 
 5. mpvue中样式单位可以用px的，推荐使用rem,编译工具会编译成rpx。
+6. 下拉加载更多使用scrolltolower事件，前提是需要给scroll-view设置一个高度才可以。
+7. 数据列表过多，显示卡顿？？https://github.com/Meituan-Dianping/mpvue/issues/181
 
 #### 完成记录
 

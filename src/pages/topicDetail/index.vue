@@ -19,7 +19,7 @@
         <div class="main">
           <div class="item-title">{{detailData.title}}</div>
           <div class="item-content">
-            <wx-parse :content="detailData.content"></wx-parse>
+            <wx-parse :content="detailData.content" imageMode="widthFix"></wx-parse>
           </div>
         </div>
       </div>

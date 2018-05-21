@@ -10,7 +10,7 @@
     </div>
     <div class="picker-wrap">
       <span>主题</span>
-      <picker :range="range" @change="pickerChange">
+      <picker :range="range" :value="rangeIndex" @change="pickerChange">
         <div>{{range[rangeIndex]}}</div>
       </picker>
     </div>

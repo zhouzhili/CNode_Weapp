@@ -8,12 +8,15 @@
       </div>
     </div>
 
-    <div class="main-content" @scrolltolower="scrollToLower">
+    <div class="main-content">
       <loading v-if="showLoading"></loading>
       <div class="list-wrap" v-else>
-        <div v-for="(data,key) in topicData" :key="key" class="list-container">
-          <topic :item="data"></topic>
-        </div>
+          <scroll-view scroll-y style="height: calc(100vh - 80rpx);" @scrolltolower="loadMore">
+            <div v-for="(data,key) in topicData" :key="key" class="list-container">
+              <topic :item="data"></topic>
+            </div>
+          </scroll-view>
+        <div class="loadMore" v-show="loadMoreDiv">加载更多...</div>
       </div>
     </div>
 
@@ -36,8 +39,15 @@
           {name: '招聘', tab: 'job'}
         ],
         activeTab: '',
+        lastTab:'',
         topicData: [],
-        showLoading:true
+        showLoading:true,
+        page:0,
+        scroll: {
+          top: 0,
+          scrollTop: 0
+        },
+        loadMoreDiv:true
       }
     },
 
@@ -51,21 +61,27 @@
     methods: {
       tabChangeHandle(e) {
         this.activeTab = e.currentTarget.id;
-        this.getTopic(this.activeTab);
+        this.page=0;
+        this.getTopic();
       },
 
-      getTopic(tab = '') {
+      getTopic() {
         let self=this;
-        this.showLoading=true;
-        let limit=tab==='job'?4:10;
-        api.getTopic({page: 1, limit, tab, mdrender: 'false'}).then(resp => {
+        this.showLoading=this.page===0;
+        let limit=this.activeTab==='job'?4:10;
+        api.getTopic({page: this.page, limit, tab:this.activeTab, mdrender: 'false'}).then(resp => {
           this.showLoading=false;
+          this.loadMoreDiv=false;
           if(resp.success){
-            this.topicData = resp.content;
+            if(this.page===0){
+              this.topicData=resp.content;
+            }else {
+              this.topicData =this.topicData.concat(resp.content);
+            }
             //缓存数据
             wx.setStorage({
               key:'cnodeTopicList'+this.activeTab,
-              data:resp.content
+              data:this.topicData
             });
           }else {
             wx.showToast({title:'获取网络数据失败，将从缓存读取数据',icon:'none'});
@@ -80,9 +96,11 @@
       },
 
       //下拉到底
-      scrollToLower(){
-        console.log('scrollToLower');
-      }
+      loadMore(){
+        this.page++;
+        this.getTopic();
+      },
+
     },
     components: {
       topic,
@@ -92,6 +110,13 @@
 </script>
 
 <style scoped>
+  .main-content{
+    display: flex;
+    flex-direction: column;
+  }
+  .loading{
+    height: 100%;
+  }
   .nav-bar {
     display: flex;
     flex-direction: row;
@@ -126,5 +151,11 @@
   .list-container {
     background-color: #ececec;
     padding: 8rpx;
+  }
+  .loadMore{
+    text-align:center;
+    font-size:14px;
+    color:#ddd;
+    background-color:#ececec;
   }
 </style>
