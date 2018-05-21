@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" @scrolltolower="scrollToLower">
       <loading v-if="showLoading"></loading>
       <div class="list-wrap" v-else>
         <div v-for="(data,key) in topicData" :key="key" class="list-container">
@@ -17,9 +17,6 @@
       </div>
     </div>
 
-    <div>
-
-    </div>
   </div>
 </template>
 
@@ -60,7 +57,8 @@
       getTopic(tab = '') {
         let self=this;
         this.showLoading=true;
-        api.getTopic({page: 1, limit: 10, tab, mdrender: 'false'}).then(resp => {
+        let limit=tab==='job'?4:10;
+        api.getTopic({page: 1, limit, tab, mdrender: 'false'}).then(resp => {
           this.showLoading=false;
           if(resp.success){
             this.topicData = resp.content;
@@ -70,17 +68,20 @@
               data:resp.content
             });
           }else {
-            wx.showToast({title:'获取网络数据失败，将从缓存读取数据'});
-            wx.getStorageInfo({
+            wx.showToast({title:'获取网络数据失败，将从缓存读取数据',icon:'none'});
+            wx.getStorage({
+              key:'cnodeTopicList'+self.activeTab,
               success: function(res) {
-                let curKey='cnodeTopicList'+self.activeTab;
-                if(curKey in res.keys){
-                  self.topicData=res[curKey]
-                }
+                self.topicData=res.data;
               }
             })
           }
         })
+      },
+
+      //下拉到底
+      scrollToLower(){
+        console.log('scrollToLower');
       }
     },
     components: {

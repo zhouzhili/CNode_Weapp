@@ -27,7 +27,7 @@ function xhr(url,method,params) {
             resolve({
               success:true,
               message:'获取数据成功',
-              content:resp.data
+              content:resp.data||resp
             });
           }else if(method==='post'){
             resolve({
@@ -54,8 +54,27 @@ function xhr(url,method,params) {
 }
 
 //主题首页
-function getTopic(params) {
-  return xhr('/topics','get',params);
+async function getTopic(params) {
+  //job接口返回数据太多会报错？？
+  let data=await xhr('/topics','get',params);
+  if(data.success){
+    let result=data.content.map((val,key,array)=>{
+      let newVal=val;
+      newVal.content=val.content.slice(0,60);
+      return newVal;
+    });
+    return{
+      success:true,
+      message:'获取数据成功',
+      content:result
+    }
+  }else {
+    return{
+      success:false,
+      message:'获取数据失败',
+      content:[]
+    }
+  }
 }
 
 //获取主题详细内容
