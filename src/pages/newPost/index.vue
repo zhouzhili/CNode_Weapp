@@ -2,11 +2,11 @@
   <div class="container">
     <div class="text">标题:</div>
     <div class="input-wrap">
-      <input placeholder="请输入标题,10个字以上" v-model="title"/>
+      <input placeholder="请输入标题,10个字以上" v-model.lazy="title"/>
     </div>
     <div class="text">内容:</div>
     <div class="input-wrap">
-      <textarea placeholder="请输入内容" v-model="content"></textarea>
+      <textarea placeholder="请输入内容" v-model.lazy="content"></textarea>
     </div>
     <div class="picker-wrap">
       <span>主题</span>

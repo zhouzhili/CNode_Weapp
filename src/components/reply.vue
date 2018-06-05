@@ -32,18 +32,15 @@
       replyData:{
         type:Object,
         default:{
-          id: "5ab34ae2e7b166bb7b9ecd0b",
+          id: "",
           author: {
-            loginname: "i5ting",
-            avatar_url: "https://avatars3.githubusercontent.com/u/3118295?v=4&s=120"
+            loginname: "",
+            avatar_url: ""
           },
-          content: '<div class="markdown-text"><p>置顶，大家多多参与，cucumber在bdd领域是极其重要的技能，对敏捷认知也会有明显提升，加油</p> </div>',
+          content: '',
           ups: [
-            "5a97b630543e098150cb70ce",
-            "599fcc08ebaa046923a82766",
-            "5a042eb23b2c1f8108a45e62",
           ],
-          create_at: "2018-03-22T06:19:14.085Z",
+          create_at: "",
           reply_id: null,
           is_uped: false
         }

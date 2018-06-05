@@ -33,13 +33,13 @@
 
     <div v-show="!showLoading">
       <div class="reply-edit-wrap" v-show="!showReplyContent" @click="showReply">
-        <img src="../../../static/images/reply.png"/>
+        <img src="/static/images/reply.png"/>
       </div>
 
       <div class="reply-text-content" v-show="showReplyContent">
         <div class="reply-text-cover" @click="showReply"></div>
         <div class="input-wrap">
-          <textarea v-model="replyContent"></textarea>
+          <textarea v-model.lazy="replyContent" cursor-spacing="20"></textarea>
           <button class="primary" @click="submitReply">回复</button>
         </div>
       </div>
@@ -204,6 +204,7 @@
     width: 100%;
     background-color: #fff;
     padding: 10px;
+    background-color: #fff;
   }
   .primary {
     color: #FFFFFF;
@@ -211,13 +212,12 @@
     width: 100%;
   }
   .reply-text-content{
-    /*display: flex;*/
     flex-direction:column;
     position:fixed;
     bottom:0;
     width:100%;
     height:100%;
-    background-color: #dddddd96;
+    background-color: rgba(221, 221, 221, 0.9);
   }
   .reply-text-cover{
     height: calc(100% - 216px);
