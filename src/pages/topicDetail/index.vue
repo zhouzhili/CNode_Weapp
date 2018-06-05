@@ -30,6 +30,20 @@
         </div>
       </div>
     </div>
+
+    <div v-show="!showLoading">
+      <div class="reply-edit-wrap" v-show="!showReplyContent" @click="showReply">
+        <img src="../../../static/images/reply.png"/>
+      </div>
+
+      <div class="reply-text-content" v-show="showReplyContent">
+        <div class="reply-text-cover" @click="showReply"></div>
+        <div class="input-wrap">
+          <textarea v-model="replyContent"></textarea>
+          <button class="primary" @click="submitReply">回复</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,7 +61,10 @@
         tagBgColor:'#ddd',
         detailData:{},
         showLoading:true,
-        currentId:''
+        currentId:'',
+        showReplyContent:false,
+        replyContent:'',
+        showReplyWrap:false
       }
     },
     computed: {
@@ -71,20 +88,54 @@
       }
     },
 
+    methods:{
+      showReply(){
+        //登录后才能回复
+        if(this.$store.state.token){
+          this.showReplyContent=!this.showReplyContent;
+        }else {
+          wx.showToast({title: '请先登录!', icon: 'none'});
+        }
+      },
+      submitReply(){
+        if (!this.replyContent.trim()) {
+          wx.showToast({title: '回复数不能为空!', icon: 'none'});
+          return;
+        }
+        api.reply({
+          id:this.detailData.id,
+          token:this.$store.state.token,
+          content:this.replyContent
+        }).then(resp=>{
+          if(resp.success){
+            wx.showToast({title: '回复成功!', icon: 'none'});
+            this.currentId='';
+            this.refreshTopic();
+          }
+          this.showReplyContent=!this.showReplyContent;
+          this.replyContent='';
+        })
+      },
+
+      refreshTopic(){
+        let id=this.$root.$mp.query.id;
+        if(this.currentId!==id){
+          this.showLoading=true;
+          this.detailData={};
+          api.getTopicDetail(id).then(resp=>{
+            this.showLoading=false;
+            if(resp.success){
+              this.detailData=resp.content;
+            }
+          });
+          this.currentId=id;
+        }
+      }
+    },
+
     //小程序的生命周期函数,onShow比mounted早执行
     onShow(){
-      let id=this.$root.$mp.query.id;
-      if(this.currentId!==id){
-        this.showLoading=true;
-        this.detailData={};
-        api.getTopicDetail(id).then(resp=>{
-          this.showLoading=false;
-          if(resp.success){
-            this.detailData=resp.content;
-          }
-        });
-        this.currentId=id;
-      }
+      this.refreshTopic();
     },
 
     components:{
@@ -122,5 +173,53 @@
   }
   .reply-wrap{
     margin-top:16rpx;
+  }
+  .reply-edit-wrap{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    background-color:#fff;
+    padding:8px;
+    border:1px solid #f4f4f4;
+    border-radius:30px;
+    box-shadow:0 0 3px 3px #eee;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reply-edit-wrap>image{
+    width:24px;
+    height:24px;
+    margin-right: 0;
+  }
+  .input-wrap {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    height: 216px;
+  }
+  textarea {
+    height: 300rpx;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+  }
+  .primary {
+    color: #FFFFFF;
+    background-color: #1AAD19;
+    width: 100%;
+  }
+  .reply-text-content{
+    /*display: flex;*/
+    flex-direction:column;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background-color: #dddddd96;
+  }
+  .reply-text-cover{
+    height: calc(100% - 216px);
   }
 </style>

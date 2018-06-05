@@ -127,6 +127,16 @@ function markAll(token) {
 function getMsg(token) {
   return xhr('/messages','get',{accesstoken:token});
 }
+
+//回复主题
+function reply(params) {
+  let id=params.id;
+  let data={
+    accesstoken:params.token,
+    content:params.content
+  };
+  return xhr(`/topic/${id}/replies`,'post',data);
+}
 export default {
   getTopic,
   getTopicDetail,
@@ -135,7 +145,8 @@ export default {
   getUserCollect,
   postNewTopics,
   markAll,
-  getMsg
+  getMsg,
+  reply
 }
 
 

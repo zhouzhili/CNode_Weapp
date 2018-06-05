@@ -45,20 +45,20 @@
       item: {
         type: Object,
         default: {
-          id: "5ae140407b0e8dc508cca7cc",
-          author_id: "573ab7ba542374db1db0a436",
-          tab: "share",
-          content: '<div class="markdown-text"><p>【进度更新】 到目前为止已经有4位分享者，数十位参与者，如果不出意外的话，下周之内就能最终决定场地和时间 大概会在5月下旬到6月中旬这几周的某个周末下午 具体的分享主题和分享者的情况也会陆续更新到这个帖子里 另外有不少童鞋问，有没有参加的门槛，经验尚浅能不能来听 那肯定是没有门槛的，想来参与的都欢迎 如果有什么特别感兴趣的话题，也可以在帖子下留言或者单独告诉我，我会尽量看看能不能联系到相关的大牛来分享</p> <p>【原贴】 赶脚最近上海Node社区不是很活跃哇，想组织一个Node Party. 时间大概再5-6月。 我司可以提供一个20-30人的场地。 有兴趣分享的筒子求勾搭。 当然也欢迎场地、直播、其他各种赞助。 我的微信：aojiaotage，请注明报名或者讲师哈。。</p> </div>',
-          title: "【NODE PARTY】【上海】最近好像没有上海NodeParty，想来组织一个",
-          last_reply_at: "2018-05-15T01:57:51.629Z",
+          id: "",
+          author_id: "",
+          tab: "",
+          content: '',
+          title: "",
+          last_reply_at: "",
           good: false,
           top: true,
-          reply_count: 67,
-          visit_count: 4175,
-          create_at: "2018-04-26T02:58:08.067Z",
+          reply_count: 0,
+          visit_count: 0,
+          create_at: "",
           author: {
-            loginname: "aojiaotage",
-            avatar_url: "https://avatars3.githubusercontent.com/u/8339316?v=4&s=120"
+            loginname: "",
+            avatar_url: ""
           }
         }
       }
@@ -145,4 +145,5 @@
     height: 28rpx;
     margin-right: 6rpx;
   }
+
 </style>

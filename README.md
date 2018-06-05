@@ -48,3 +48,6 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 2018-05-18 初步完成基本功能，含主页、发帖、通知、用户四大模块，目前告一段落，接下来完善，主要工作任务为下拉刷新和下拉加载，以及添加切换动画等工作。
 
+#### 小程序线上地址
+<img src='static/images/cnodeweapp.jpg' alt='小程序码'>
+
