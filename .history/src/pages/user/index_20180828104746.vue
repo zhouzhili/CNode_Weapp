@@ -18,10 +18,9 @@
             <span>我们保证信息安全,不泄露您的隐私</span>
           </div>
         </div>
-        <div class="about-pj">
+        <div>
           <div>本项目为开源项目,项目地址为</div>
           <div>https://github.com/zhouzhili/CNode_Weapp.git</div>
-          <div>仅供学习参考</div>
         </div>
       </div>
     </div>
@@ -334,12 +333,5 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.about-pj {
-  text-align: center;
-  font-size: 12px;
-  color: #ddd;
-  bottom: 20px;
-  position: absolute;
 }
 </style>

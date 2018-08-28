@@ -338,7 +338,7 @@ export default {
 .about-pj {
   text-align: center;
   font-size: 12px;
-  color: #ddd;
+  color: #939393;
   bottom: 20px;
   position: absolute;
 }

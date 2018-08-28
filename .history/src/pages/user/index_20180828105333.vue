@@ -21,7 +21,6 @@
         <div class="about-pj">
           <div>本项目为开源项目,项目地址为</div>
           <div>https://github.com/zhouzhili/CNode_Weapp.git</div>
-          <div>仅供学习参考</div>
         </div>
       </div>
     </div>
@@ -338,7 +337,7 @@ export default {
 .about-pj {
   text-align: center;
   font-size: 12px;
-  color: #ddd;
+  color: #939393;
   bottom: 20px;
   position: absolute;
 }
